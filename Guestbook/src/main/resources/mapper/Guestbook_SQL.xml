@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestbook">
+	<select id="selectGuestbookList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				NO, 
+				EMAIL, 
+				PWD, 
+				CONTENTS, 
+				REG_DATE, 
+				MOD_DATE
+			FROM
+				GUESTBOOK
+			ORDER BY NO DESC
+		]]>
+	</select>
+</mapper>
