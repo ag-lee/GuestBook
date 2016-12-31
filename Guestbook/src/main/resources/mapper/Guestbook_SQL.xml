@@ -3,7 +3,7 @@
 
 <mapper namespace="guestbook">
 	<select id="selectGuestbookList" parameterType="hashmap" resultType="hashmap">
-		<![CDATA[
+			<![CDATA[
 			SELECT
 				NO, 
 				EMAIL, 
@@ -14,6 +14,41 @@
 			FROM
 				GUESTBOOK
 			ORDER BY NO DESC
+			]]>
+	</select>
+	
+	<insert id="insertGuestbook" parameterType="hashmap">
+			<![CDATA[
+			INSERT INTO GUESTBOOK
+			(
+				EMAIL,
+				PWD,
+				CONTENTS,
+				REG_DATE
+			) 
+			VALUES
+			(
+				#{EMAIL},
+				#{PWD},
+				#{CONTENTS},
+				NOW()
+			)
+			]]>
+	</insert>
+	<select id="selectForUpdate" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				NO, 
+				EMAIL, 
+				PWD, 
+				CONTENTS, 
+				REG_DATE, 
+				MOD_DATE
+			FROM
+				GUESTBOOK
+			WHERE
+				NO = #{NO}
 		]]>
 	</select>
+	
 </mapper>

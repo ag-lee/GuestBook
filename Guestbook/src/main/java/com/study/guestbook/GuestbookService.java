@@ -15,4 +15,14 @@ public class GuestbookService {
 	public List<Map<String,Object>> selectGuestbookList(Map<String, Object> map) throws Exception {
 		return guestbookDAO.selectGuestbookList(map);
 	}
+	
+	public void addGuestbook(Map<String, Object> map) throws Exception {
+		this.guestbookDAO.addGuestbook(map);
+	}
+
+	public Map<String, Object> selectForUpdate(Map<String, Object> map) throws Exception {
+	    Map<String, Object> resultMap = this.guestbookDAO.selectForUpdate(map);
+	    return resultMap;
+
+	}
 }
