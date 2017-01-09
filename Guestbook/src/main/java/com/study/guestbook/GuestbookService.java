@@ -25,4 +25,9 @@ public class GuestbookService {
 	    return resultMap;
 
 	}
+	
+	public void updateGuestbook(Map<String, Object> map) throws Exception {
+		this.guestbookDAO.updateGuestbook(map);
+	}
+
 }

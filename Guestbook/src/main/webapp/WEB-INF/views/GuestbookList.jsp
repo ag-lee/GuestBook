@@ -39,10 +39,11 @@
 			<td><%=m.get("EMAIL")%></td>
 			<td><%=m.get("CONTENTS")%></td>
 			<td><%=m.get("REG_DATE")%></td>
-			<td class="modify"> 
-				<a href="#this" name="modify">수정</a>
-				 <input type="hidden" id="NO" value="${m.IDX}">
-			</td>
+			<td class="modify"><a href="#this" name="modify"> 
+				<input type="hidden" id="NO" value="<%=m.get("NO")%>"> 
+				<input type="hidden" id="PWD" value="<%=m.get("PWD")%>">
+					수정
+			</a></td>
 		</tr>
 		<tr height="1" bgcolor="#82B5DF">
 			<td colspan="6" width="752"></td>
@@ -73,38 +74,46 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#write").click(function() {
+			$("#write").click(function(e) {
+				e.preventDefault();
 				bn_registerGuestbook();
 			});
-			
-			$("a[name='modify']").click(function() {
+
+			$("a[name='modify']").click(function(e) {
+				e.preventDefault();
+				var tmp = document.getElementById("PWD").value;
+				var inputString = prompt('비밀번호를 입력해주세요.', '');
+				
+				if(inputString == tmp) {
 				fn_modifyGuestbook($(this));
+				} else {
+					alert("비밀번호가 틀렸습니다.");
+				}
+
 			});
-			
+
 		});
 
 		function bn_registerGuestbook() {
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("/guestbook/guestbookAdd");
+			comSubmit.setUrl("/guestbook/openGuestbookAdd");
 			comSubmit.submit();
 		}
-		
+
 		function fn_modifyGuestbook(obj) {
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("/guestbook/guestbookUpdate");
-			comSubmit.addParam("NO",obj.parent().find("#NO").val());
+			comSubmit.addParam("NO", obj.parent().find("#NO").val());
 			comSubmit.submit();
 		}
 
 		function gfn_isNull(str) {
 			if (str == null)
 				return true;
-			if (str == "Nan")
+			if (str == "NaN")
 				return true;
-
 			if (new String(str).valueOf() == "undefined")
 				return true;
-
 			var chkStr = new String(str);
 			if (chkStr.valueOf() == "undefined")
 				return true;
@@ -112,7 +121,6 @@
 				return true;
 			if (chkStr.toString().length == 0)
 				return true;
-
 			return false;
 		}
 
@@ -138,7 +146,7 @@
 			this.submit = function submit() {
 				var frm = $("#" + this.formId)[0];
 				frm.action = this.url;
-				frm.method = "post";
+				frm.method = "get";
 				frm.submit();
 			};
 		}

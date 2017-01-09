@@ -18,7 +18,6 @@
 	</select>
 	
 	<insert id="insertGuestbook" parameterType="hashmap">
-			<![CDATA[
 			INSERT INTO GUESTBOOK
 			(
 				EMAIL,
@@ -33,22 +32,28 @@
 				#{CONTENTS},
 				NOW()
 			)
-			]]>
 	</insert>
 	<select id="selectForUpdate" parameterType="hashmap" resultType="hashmap">
 		<![CDATA[
 			SELECT
-				NO, 
-				EMAIL, 
-				PWD, 
-				CONTENTS, 
-				REG_DATE, 
-				MOD_DATE
+				*
 			FROM
 				GUESTBOOK
 			WHERE
 				NO = #{NO}
 		]]>
 	</select>
-	
+	<update id="updateGuestbook" parameterType="hashmap">
+		<![CDATA[
+			UPDATE GUESTBOOK
+			SET
+				EMAIL=#{EMAIL},
+				PWD=#{PWD},
+				CONTENTS=#{CONTENTS},
+				MOD_DATE=NOW()
+			WHERE
+				NO = #{NO}
+		]]>
+		
+	</update>
 </mapper>
